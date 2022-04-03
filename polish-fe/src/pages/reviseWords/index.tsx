@@ -66,7 +66,7 @@ export const ReviseWordsPage = () => {
   }
 
   const validateWord = () => {
-    if (inputVal.trim() === words[0].pl) {
+    if (inputVal.trim().toLowerCase() === words[0].pl) {
       setIsValid(WordValid.VALID);
     } else {
       setIsValid(WordValid.INVALID);
@@ -140,6 +140,7 @@ export const ReviseWordsPage = () => {
       <ButtonContainer>
         <Button onClick={validateWord}>Check</Button>
         <Button onClick={show}>Show</Button>
+        <Button onClick={next}>Skip</Button>
         <Button
           onClick={next}
           disabled={!(isValid === WordValid.VALID || haveShown)}
