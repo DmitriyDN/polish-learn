@@ -8,9 +8,9 @@ class WordService {
     return files;
   };
 
-  getAllWordFilesContent = async () => {
+  getWordsFilesContent = async (path?: string) => {
     const prefix = "assets/words";
-    const files = fileService.getFilesInfolder(prefix);
+    const files = path ? [path] : fileService.getFilesInfolder(prefix);
     const content = (await fileService.readAllFilesAsync([
       ...files.map((fp) => `${config.rootFolder}/${prefix}/${fp}`),
     ])) as Array<IWord[]>;

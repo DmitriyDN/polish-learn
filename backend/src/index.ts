@@ -1,11 +1,14 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import express, { Application } from "express";
 import routes from "./routes";
 import config from "./config";
 import cors from "cors";
+import compression from "compression";
 
 const app: Application = express();
 
 app.use(cors());
+
+app.use(compression());
 
 routes(app);
 
