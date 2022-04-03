@@ -2,27 +2,59 @@ import React, { useState } from "react";
 import { FETCH_URIS } from "../../data/fetchUris";
 import { fetchData } from "../../services/api";
 import { IWord } from "../../../../interfaces/IWord";
-import { Button, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextField,
+  Typography,
+} from "@mui/material";
 import styled from "@emotion/styled";
 import _ from "lodash";
 import { wordColor, WordValid } from "../../services/wordProcessor";
 import { mediaQueries } from "../../utils/mediaQueries";
+
+const all = "Всі";
 
 export const ReviseWordsPage = () => {
   const [words, setWords] = useState<IWord[]>([]);
   const [inputVal, setInputVal] = useState<string>("");
   const [isValid, setIsValid] = useState<WordValid>(WordValid.PENDING);
   const [haveShown, setHaveShown] = useState<boolean>(false);
+  const [files, setFiles] = useState<string[]>([]);
+  const [currentFile, setCurrentFile] = useState("");
+
+  const getFile = (file: string) => {
+    if (file === all) {
+      fetchData({ url: FETCH_URIS.GET_ALL_WORDS }).then((data) => {
+        setWords(_.shuffle(data));
+      });
+    } else {
+      fetchData({
+        url: `${FETCH_URIS.GET_WORDS_FROM_FILE}/${file}`,
+      }).then((data: IWord[]) => {
+        setWords(_.shuffle(data));
+      });
+    }
+  };
+
   React.useEffect(() => {
-    fetchData({ url: FETCH_URIS.GET_ALL_WORDS }).then((data) => {
-      setWords(_.shuffle(data));
-    });
+    fetchData({ url: FETCH_URIS.GET_ALL_WORD_FILES }).then(
+      (files: string[]) => {
+        setFiles([all, ...files]);
+        if (files.length) {
+          setCurrentFile(files[0]);
+          getFile(files[0]);
+        }
+      }
+    );
   }, []);
 
   const onChangeHandler = (
     ev: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setInputVal(ev.target.value.trim());
+    setInputVal(ev.target.value);
   };
 
   if (!words || !words.length) {
@@ -34,7 +66,7 @@ export const ReviseWordsPage = () => {
   }
 
   const validateWord = () => {
-    if (inputVal === words[0].pl) {
+    if (inputVal.trim() === words[0].pl) {
       setIsValid(WordValid.VALID);
     } else {
       setIsValid(WordValid.INVALID);
@@ -61,12 +93,24 @@ export const ReviseWordsPage = () => {
     }
   };
 
+  const changeFile = (file: SelectChangeEvent<string>) => {
+    setCurrentFile(file.target.value);
+    getFile(file.target.value);
+  };
+
   return (
     <Wrapper>
       <Info>
         <Typography variant="h6" component="div" gutterBottom>
           Залишилось слів: {words.length}
         </Typography>
+        <Select value={currentFile} onChange={changeFile}>
+          {files.map((it, index) => (
+            <MenuItem key={`value-${index}`} value={it}>
+              {it}
+            </MenuItem>
+          ))}
+        </Select>
       </Info>
       <Typography
         color={wordColor(isValid)}
