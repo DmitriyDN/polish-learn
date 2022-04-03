@@ -6,6 +6,7 @@ import { Button, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import _ from "lodash";
 import { wordColor, WordValid } from "../../services/wordProcessor";
+import { mediaQueries } from "../../utils/mediaQueries";
 
 export const ReviseWordsPage = () => {
   const [words, setWords] = useState<IWord[]>([]);
@@ -54,6 +55,12 @@ export const ReviseWordsPage = () => {
     }
   };
 
+  const keyPressHandle = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+    if (ev.keyCode === 13) {
+      validateWord();
+    }
+  };
+
   return (
     <Wrapper>
       <Info>
@@ -83,6 +90,7 @@ export const ReviseWordsPage = () => {
           label="Відповідь"
           onChange={onChangeHandler}
           value={inputVal}
+          onKeyDown={keyPressHandle}
         />
       </InputWrapper>
       <ButtonContainer>
@@ -126,4 +134,8 @@ const ButtonContainer = styled.div`
 const InputWrapper = styled.div`
   width: 100%;
   max-width: 50vw;
+  margin-top: 2rem;
+  ${mediaQueries.mobile} {
+    max-width: 90vw;
+  }
 `;

@@ -6,7 +6,7 @@ interface IFetchParams {
   body?: object;
 }
 
-const apiUrl = "http://localhost:3001";
+const apiUrl = window.origin.replace("3000", "3001");
 
 export const fetchData = async ({
   url,
