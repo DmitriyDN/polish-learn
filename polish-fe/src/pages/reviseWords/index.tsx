@@ -67,7 +67,7 @@ export const ReviseWordsPage = () => {
   }
 
   const validateWord = () => {
-    if (inputVal.trim().toLowerCase() === words[0].pl) {
+    if (inputVal.trim().toLowerCase() === words[0].pl.toLocaleLowerCase()) {
       setIsValid(WordValid.VALID);
     } else {
       setIsValid(WordValid.INVALID);
