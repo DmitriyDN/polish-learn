@@ -34,6 +34,7 @@ export const ReviseWordsPage = () => {
       fetchData({
         url: `${FETCH_URIS.GET_WORDS_FROM_FILE}/${file}`,
       }).then((data: IWord[]) => {
+        // setWords(_.shuffle(data).filter((it) => it.ua === "тітка"));
         setWords(_.shuffle(data));
       });
     }
@@ -89,7 +90,14 @@ export const ReviseWordsPage = () => {
 
   const keyPressHandle = (ev: React.KeyboardEvent<HTMLDivElement>) => {
     if (ev.keyCode === 13) {
-      validateWord();
+      if (isValid === WordValid.VALID) {
+        validateWord();
+        if (isValid === WordValid.VALID) {
+          next();
+        }
+      } else {
+        validateWord();
+      }
     }
   };
 
@@ -114,7 +122,7 @@ export const ReviseWordsPage = () => {
       </Info>
       <Typography
         color={wordColor(isValid)}
-        variant="h2"
+        variant="h3"
         component="div"
         gutterBottom
       >
@@ -130,6 +138,7 @@ export const ReviseWordsPage = () => {
       </Typography>
       <InputWrapper>
         <TextField
+          autoFocus={true}
           fullWidth={true}
           label="Відповідь"
           onChange={onChangeHandler}
@@ -141,10 +150,7 @@ export const ReviseWordsPage = () => {
         <Button onClick={validateWord}>Check</Button>
         <Button onClick={show}>Show</Button>
         <Button onClick={next}>Skip</Button>
-        <Button
-          onClick={next}
-          disabled={!(isValid === WordValid.VALID || haveShown)}
-        >
+        <Button onClick={next} disabled={isValid !== WordValid.VALID}>
           Next
         </Button>
       </ButtonContainer>
