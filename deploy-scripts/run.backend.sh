@@ -2,7 +2,7 @@
 SRC_PATH=/home/dima/polish-learn
 SERVICE_NAME=lang-backend
 
-cd $SRC_PATH
+cd $SRC_PATH/backend
 
 yarn
 
