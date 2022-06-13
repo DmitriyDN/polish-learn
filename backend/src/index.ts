@@ -10,6 +10,10 @@ app.use(cors());
 
 app.use(compression());
 
+app.use("/ping", async (_, response) => {
+  response.send({ msg: "Hello world" });
+});
+
 routes(app);
 
 // Start server
