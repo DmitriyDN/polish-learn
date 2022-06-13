@@ -1,4 +1,4 @@
-import { IWord } from "../../../interfaces/IWord";
+import { IWord } from "../../interfaces/IWord";
 import config from "../config";
 import fileService from "./fileService";
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FETCH_URIS } from "../../data/fetchUris";
 import { fetchData } from "../../services/api";
-import { IWord } from "../../../../interfaces/IWord";
+import { IWord } from "../../../../backend/interfaces/IWord";
 import {
   Button,
   MenuItem,
