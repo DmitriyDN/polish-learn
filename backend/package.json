@@ -15,7 +15,7 @@
     "lint-test-fix": "yarn lint-test --fix",
     "lint-src-fix": "yarn lint-src --fix",
     "lint:fix": "yarn lint-src-fix; yarn lint-test-fix",
-    "build": "tsc",
+    "build": "tsc && cp -R ./src/assets ./dist/",
     "write-git-hash": "./scripts/write-git-hash",
     "report-build-to-bugsnag": "./scripts/report-build-to-bugsnag",
     "typeorm:clean": "rimraf dist/db/migrations/*",
