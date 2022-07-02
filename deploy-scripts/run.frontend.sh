@@ -1,5 +1,5 @@
 #/bin/bash
-SRC_PATH=/home/dima/polish-learn
+SRC_PATH=$PWD/polish-learn
 SERVICE_NAME=lang-frontend
 
 cd $SRC_PATH/polish-fe
