@@ -13,5 +13,6 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          expires: 4h
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_POLISH_A39B6 }}'
           projectId: polish-a39b6
