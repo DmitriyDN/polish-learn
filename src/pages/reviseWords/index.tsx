@@ -20,6 +20,8 @@ const files = [
   "kanapka2.json",
   "kanapka3.json",
   "kanapka4.json",
+  "kanapka5.json",
+  "kanapka12.json",
   "kleks1.json",
   "kleks2.json",
   "months.json",
